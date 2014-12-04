@@ -1,6 +1,6 @@
 class PermittedParams < Struct.new(:params, :user)
 
-  %w[user vote subscription motion membership_request
+  %w[user vote subscription motion membership_request membership
    invitation group_request group discussion comment
    attachment contact_message theme user_deactivation_response].each do |kind|
     define_method(kind) do
@@ -40,6 +40,10 @@ class PermittedParams < Struct.new(:params, :user)
     [:name, :email, :introduction]
   end
 
+  def membership_attributes
+    [:following_by_default]
+  end
+
   def invitation_attributes
     [:recipient_email, :recipient_name, :intent]
   end
@@ -54,7 +58,7 @@ class PermittedParams < Struct.new(:params, :user)
      :description, :next_steps_completed, :payment_plan,
      :is_visible_to_parent_members, :parent_members_can_see_discussions,
      :membership_granted_upon, :cover_photo, :logo, :category_id,
-     :members_can_raise_motions, :members_can_vote,  :members_can_start_discussions, :members_can_create_subgroups]
+     :members_can_raise_motions, :members_can_raise_proposals, :members_can_vote,  :members_can_start_discussions, :members_can_create_subgroups]
   end
 
   def discussion_attributes

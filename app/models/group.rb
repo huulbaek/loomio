@@ -186,6 +186,14 @@ class Group < ActiveRecord::Base
 
   alias_method :real_creator, :creator
 
+  def members_can_raise_proposals
+    members_can_raise_motions
+  end
+
+  def members_can_raise_proposals=(value)
+    members_can_raise_motions = value
+  end
+
   def creator
     self.real_creator || admins.first || members.first
   end
@@ -263,6 +271,7 @@ class Group < ActiveRecord::Base
     when 'members'
       self.is_visible_to_public = false
       self.is_visible_to_parent_members = false
+      self.parent_members_can_see_discussions = false
       self.discussion_privacy_options = 'private_only'
       self.membership_granted_upon = 'invitation'
     else

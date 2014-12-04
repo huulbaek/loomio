@@ -22,7 +22,7 @@ h3, h4 {
   @include fontHelveticaMedium;
   @include fontSmall;
   text-transform: uppercase;
-  color: #545454;
+  color: $kinda-dark-grey;
   margin-top: 22px;
 }
 
@@ -39,4 +39,7 @@ h4{
      the margins on your card, e.g. if the last
      element in the card is a paragraph */
   margin-bottom: -10px;
+}
+.nowrap{
+  white-space: nowrap;
 }
