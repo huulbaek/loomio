@@ -30,23 +30,18 @@ Loomio::Application.routes.draw do
 
   namespace :api, path: '/api/v1', defaults: {format: :json} do
     resource :inbox, only: :show, controller: 'inbox'
-    resources :groups, only: [:show, :create, :update] do
+    resources :groups, only: :show do
       get :subgroups, on: :collection
-      patch :archive, on: :member
     end
-    resources :memberships, only: [:index, :create, :update, :destroy] do
+    resources :memberships, only: [:index] do
       get :autocomplete, on: :collection
       get :my_memberships, on: :collection
-      patch :make_admin, on: :member
-      patch :remove_admin, on: :member
     end
     resources :invitables, only: :index
     resources :invitations, only: :create
     resources :events, only: :index
     resources :discussions, only: [:show, :index, :create, :update, :destroy]
-    resources :motions,     only: [       :index, :create, :update], path: :proposals do
-      post :close, on: :member
-    end
+    resources :motions,     only: [       :index, :create, :update], path: :proposals
     resources :votes,       only: [       :index, :create, :update] do
       get :my_votes, on: :collection
     end
@@ -54,13 +49,11 @@ Loomio::Application.routes.draw do
       post :like, on: :member
       post :unlike, on: :member
     end
-    resources :attachments, only: [:create, :destroy]
+    resources :attachments, only: :create
     resources :motions, only: :create do
       post :vote, on: :member
     end
     resources :translations, only: :show
-    resources :notifications, only: :index
-    resources :contact_messages, only: :create
     namespace :faye do
       post :subscribe
       get :who_am_i
@@ -168,7 +161,8 @@ Loomio::Application.routes.draw do
   end
 
   constraints(MainDomainConstraint) do
-    root :to => 'marketing#index'
+    # huulbaek
+    root :to => 'explore#search'
   end
 
   delete 'membership_requests/:id/cancel', to: 'groups/membership_requests#cancel', as: :cancel_membership_request
@@ -305,7 +299,6 @@ Loomio::Application.routes.draw do
       get :translation
       get :wallets
       get :browser_not_supported
-      get :crowdfunding_celebration
     end
   end
 
