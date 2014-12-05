@@ -44,11 +44,8 @@ class Group < ActiveRecord::Base
   scope :visible_to_public, -> { published.where(is_visible_to_public: true) }
   scope :hidden_from_public, -> { published.where(is_visible_to_public: false) }
 
-
   scope :visible_on_explore_front_page,
-       -> { visible_to_public.categorised_any.parents_only.
-            more_than_n_members(1).
-            order('discussions.last_comment_at') }
+        -> { visible_to_public.categorised_any.parents_only }
 
   scope :include_admins, includes(:admins)
 
