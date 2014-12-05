@@ -162,7 +162,7 @@ Loomio::Application.routes.draw do
 
   constraints(MainDomainConstraint) do
     # huulbaek
-    root :to => 'explore#search'
+    root :to => 'explore#index'
   end
 
   delete 'membership_requests/:id/cancel', to: 'groups/membership_requests#cancel', as: :cancel_membership_request
